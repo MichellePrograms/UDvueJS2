@@ -1,42 +1,40 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                <button @click="selectedComponent = 'appQuote'">Quote</button>
-                <button @click="selectedComponent = 'appAuthor'">Author</button>
-                <button @click="selectedComponent = 'appNew'">New</button>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                <h1>Filters & Mixins</h1>
+                <p>{{ text | toUppercase | to-lowercase }}</p>
                 <hr>
-                <p>{{ selectedComponent }}</p>
-                <keep-alive>
-                    <component :is="selectedComponent">
-                        <p>Default Content</p>
-                    </component>
-                </keep-alive>
-                <!--<app-quote>-->
-                    <!--<h2 slot="title">{{ quoteTitle }}</h2>-->
-                    <!--<p>A wonderful Quote</p>-->
-                <!--</app-quote>-->
+                <button @click="fruits.push('Berries')">Add New Item</button>
+                <input v-model="filterText">
+                <ul>
+                    <li v-for="fruit in filteredFruits">{{ fruit }}</li>
+                </ul>
+                <hr>
+                <app-list></app-list>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Quote from './components/Quote.vue';
-    import Author from './components/Author.vue';
-    import New from './components/New.vue';
+    import List from './List.vue';
+    import { fruitMixin } from './fruitMixin';
 
     export default {
-        data: function() {
+        mixins: [fruitMixin],
+        data() {
             return {
-                quoteTitle: 'The Quote',
-                selectedComponent: 'appQuote'
+                text: 'Hello there!'
+            }
+        },
+        filters: {
+            toUppercase(value) {
+                return value.toUpperCase();
             }
         },
         components: {
-            appQuote: Quote,
-            appAuthor: Author,
-            appNew: New
+            appList: List
         }
     }
 </script>
