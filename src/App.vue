@@ -1,42 +1,39 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
-                <button @click="selectedComponent = 'appQuote'">Quote</button>
-                <button @click="selectedComponent = 'appAuthor'">Author</button>
-                <button @click="selectedComponent = 'appNew'">New</button>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                <h1>Filters & Mixins</h1>
+                <p>{{ text | toUppercase | to-lowercase }}</p>
                 <hr>
-                <p>{{ selectedComponent }}</p>
-                <keep-alive>
-                    <component :is="selectedComponent">
-                        <p>Default Content</p>
-                    </component>
-                </keep-alive>
-                <!--<app-quote>-->
-                    <!--<h2 slot="title">{{ quoteTitle }}</h2>-->
-                    <!--<p>A wonderful Quote</p>-->
-                <!--</app-quote>-->
+                <input v-model="filterText">
+                <ul>
+                    <li v-for="fruit in filteredFruits">{{ fruit }}</li>
+                </ul>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Quote from './components/Quote.vue';
-    import Author from './components/Author.vue';
-    import New from './components/New.vue';
-
     export default {
-        data: function() {
+        data() {
             return {
-                quoteTitle: 'The Quote',
-                selectedComponent: 'appQuote'
+                text: 'Hello there!',
+                fruits: ['Apple', 'Banana', 'Mango', 'Melon'],
+                filterText: ''
             }
         },
-        components: {
-            appQuote: Quote,
-            appAuthor: Author,
-            appNew: New
+        filters: {
+            toUppercase(value) {
+                return value.toUpperCase();
+            }
+        },
+        computed: {
+            filteredFruits() {
+                return this.fruits.filter((element) => {
+                    return element.match(this.filterText);
+                });
+            }
         }
     }
 </script>
