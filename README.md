@@ -1,6 +1,6 @@
-# vue-update
+# vue-cli
 
-> Vue Auth & more
+> A Vue.js project
 
 ## Build Setup
 

@@ -1,26 +1,45 @@
 <template>
-  <div id="app">
-    <app-header />
-    <router-view></router-view>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <button @click="selectedComponent = 'appQuote'">Quote</button>
+                <button @click="selectedComponent = 'appAuthor'">Author</button>
+                <button @click="selectedComponent = 'appNew'">New</button>
+                <hr>
+                <p>{{ selectedComponent }}</p>
+                <keep-alive>
+                    <component :is="selectedComponent">
+                        <p>Default Content</p>
+                    </component>
+                </keep-alive>
+                <!--<app-quote>-->
+                    <!--<h2 slot="title">{{ quoteTitle }}</h2>-->
+                    <!--<p>A wonderful Quote</p>-->
+                <!--</app-quote>-->
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-  import Header from './components/header/header.vue'
-  export default {
-    name: 'app',
-    components: {
-      'app-header': Header
-    },
-    created () {
-      this.$store.dispatch('tryAutoLogin')
+    import Quote from './components/Quote.vue';
+    import Author from './components/Author.vue';
+    import New from './components/New.vue';
+
+    export default {
+        data: function() {
+            return {
+                quoteTitle: 'The Quote',
+                selectedComponent: 'appQuote'
+            }
+        },
+        components: {
+            appQuote: Quote,
+            appAuthor: Author,
+            appNew: New
+        }
     }
-  }
 </script>
 
 <style>
-  body, html {
-    margin: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
 </style>
